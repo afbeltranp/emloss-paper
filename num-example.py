@@ -27,10 +27,10 @@ def build_tooth_pair_Bfields(Br_s, Bt_s):
 
     return Bt_tp.T, Br_tp.T
 
-def build_rotor_pole_Bfields(Br_r_rrf, Bt_r_rrf, num_poles, num_teeth):
+def build_rotor_pole_Bfields(Br_r_rrf, Bt_r_rrf):
     # Reconstruct B-fields for each element in a rotor pole
-    Br = np.tile(Br_r_rrf, (num_teeth // num_poles, 1))
-    Bt = np.tile(Bt_r_rrf, (num_teeth // num_poles, 1))
+    Br = np.tile(Br_r_rrf, (6, 1))
+    Bt = np.tile(Bt_r_rrf, (6, 1))
 
     return Br.T, Bt.T
 
@@ -301,7 +301,7 @@ def compute_rotor_core_loss(Br_r_rrf, Bt_r_rrf, delta):
     fe = (num_poles / 2.0) * mechanical_speed / (2.0 * np.pi)
 
     # Build B-fields for one rotor pole for all rotor positions.
-    Bx, By = build_rotor_pole_Bfields(Br_r_rrf, Bt_r_rrf, num_poles, num_teeth)
+    Bx, By = build_rotor_pole_Bfields(Br_r_rrf, Bt_r_rrf)
     pwn = 0.1  # Percentage of the Nyquist frequency to keep (\alpha).
 
     # Process both Bx and By together.
